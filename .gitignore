@@ -1,0 +1,8 @@
+# ignore executable files which is built in Windows
+*.[exe]
+
+# ignore dump log files
+*.[log]
+
+# ignore Visual Studio Code relatived files
+*.[vscode]
