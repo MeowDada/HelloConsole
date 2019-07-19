@@ -5,12 +5,12 @@
 
 int continueous_mode = 0;
 
-void enable_command_mode(void)
+static void enable_command_mode(void)
 {
     continueous_mode = 1;
 }
 
-void guess_lucky_number(int guess)
+static void guess_lucky_number(int guess)
 {
     srand(time(NULL));
     int lucky_number = (rand() % 3) + 1;
@@ -20,7 +20,7 @@ void guess_lucky_number(int guess)
         fprintf(stdout, "Nice tried!!!\n");
 }
 
-void roll_dice(int num_rolls)
+static void roll_dice(int num_rolls)
 {
     srand(time(NULL));
     while (num_rolls--) {
@@ -29,17 +29,17 @@ void roll_dice(int num_rolls)
     }
 }
 
-void show_program_name(const char *program_name)
+static void show_program_name(const char *program_name)
 {
     fprintf(stdout, "%s\n", program_name);
 }
 
-void say_hello(void)
+static void say_hello(void)
 {
     fprintf(stdout, "Hello World!\n");
 }
 
-void usage(const char *program_name)
+static void usage(const char *program_name)
 {
     fprintf(stderr, "Usage: [-r<num_rolls>] [-g<guess_number>]\n");
     fprintf(stderr, "Where:\n");
@@ -48,6 +48,7 @@ void usage(const char *program_name)
     fprintf(stderr, "   -r - Roll a dice and show its value\n");
     fprintf(stderr, "   -S - Show the program name\n");
     fprintf(stderr, "   -s - Say Hello to this world\n");
+    fprintf(stderr, "   -q - Quit\n");
     fprintf(stderr, "   -? - This help text\n");
 }
 
@@ -61,7 +62,7 @@ int main(int argc, char **argv)
     /* 
      * Parse startup command by using build-in function getopt(...)
      */
-    while ((opt = getopt(argc, argv, "g:cr::Ss")) != -1) {
+    while ((opt = getopt(argc, argv, "g:cr::Ssq")) != -1) {
         switch (opt) {
             case 'g':
                 guess_lucky_number(atoi(optarg));
@@ -84,6 +85,9 @@ int main(int argc, char **argv)
                 break;
             case 's':
                 say_hello();
+                break;
+            case 'q':
+                exit(0);
                 break;
             case 'h':
             case '?':
