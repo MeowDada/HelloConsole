@@ -14,7 +14,7 @@ static unsigned char *generate_data(size_t size)
 {
     int sizeof_int = sizeof(int);
     if (size % sizeof_int != 0) {
-        LOG_PARAMS(DEBUG_ERR, stderr, "size must be divisible by %d", sizeof_int);
+        LOG_PARAMS(DEBUG_ERR, stderr, "size must be divisible by %d\n", sizeof_int);
         return NULL;
     }
 
@@ -60,6 +60,9 @@ static inline int file_is_full(long long int nbytes_write, long long int size)
 static inline size_t generate_random_data_size(void)
 {
     int size = MIN_CHUNK_SIZE + (rand() % (MAX_CHUNK_SIZE-MIN_CHUNK_SIZE));
+    size += (4-(size % 4));
+    if (size > MAX_CHUNK_SIZE)
+        size = MAX_CHUNK_SIZE;
     return (size_t)size;
 }
 
