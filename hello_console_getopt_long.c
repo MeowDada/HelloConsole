@@ -16,7 +16,7 @@ static struct option cmds[] = {
     {"help",    no_argument,        NULL,   'h'}
 };
 
-const char *cmd_format = "f:s::d::rvh";
+const char *cmd_format = "f:s:d::rvh";
 
 int debug_level = DEFAULT_DEBUG_LEVEL;
 
@@ -72,6 +72,7 @@ int main(int argc, char **argv)
                     goto end;
                 }
                 output_file_size = atoll(optarg);
+                output_file_size *= (long long) 1024;
                 LOG_PARAMS(DEBUG_WARN, stderr, "Debug file size = %lld\n", output_file_size);
                 break;
             case 'd':
@@ -107,7 +108,7 @@ int main(int argc, char **argv)
         goto end;
     }
 
-end:
     fclose(fp);
+end:
     return EXIT_SUCCESS;
 }
