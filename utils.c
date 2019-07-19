@@ -67,9 +67,14 @@ int try_open(FILE **fp, const char *fname, const char *mode)
 {
     LOG(DEBUG_INFO, stdout, "Try opening the file...\n");
 
-    FILE *tmp = fopen(fname, mode);
-    CHECK_PTR(tmp, 0);
-    *fp = tmp;
+    FILE *tmp = NULL;
+    if ((tmp = fopen(fname, mode)) != NULL) {
+        *fp = tmp;
+    }
+    else {
+        LOG(DEBUG_FATAL, stderr, "Failed to open the file!\n");
+        return 0;
+    }
 
     LOG(DEBUG_INFO, stdout, "Opening the file successfully\n");
 
