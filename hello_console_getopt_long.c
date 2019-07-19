@@ -25,7 +25,7 @@ static gen_option_t gen_opt = {
     .random_content = 0
 };
 static long long output_file_size = DEFAULT_OUTPUT_FILE_SIZE;
-char *output_file_name = NULL;
+char *output_file_name;
 const char *mode = "wb+";
 
 static void usage(const char *program_name)
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
                     LOG(DEBUG_FATAL, stderr, "Must specify the output file name with -f <filename>!\n");
                     goto end;
                 }
-                strcpy(output_file_name, optarg);
+                output_file_name = optarg;
                 break;
             case 's':
                 if (!optarg) {
@@ -99,10 +99,8 @@ int main(int argc, char **argv)
         }
     }
 
-    if (!try_open(&fp, output_file_name, mode)) {
-        LOG(DEBUG_FATAL, stderr, "Failed to open the file!\n");
+    if (!try_open(&fp, output_file_name, mode))
         goto end;
-    }
 
     if (!generate_file(fp, output_file_name, output_file_size, gen_opt)) {
         LOG(DEBUG_FATAL, stderr, "Failed to generate the file!\n");
