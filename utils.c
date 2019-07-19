@@ -43,11 +43,11 @@ static int write_data_to_file(FILE *fp, unsigned char *data, size_t size)
     size_t nbytes_write = fwrite(data, sizeof(unsigned char), size, fp);
 
     if (nbytes_write != size) {
-        LOG_PARAMS(DEBUG_WARN, stderr, "%d bytes should be written to the file, but only %d bytes are being written!\n", nbytes_write, size);
+        LOG_PARAMS(DEBUG_WARN, stderr, "%8ld bytes should be written to the file, but only %8ld bytes are being written!\n", nbytes_write, size);
         return 0;
     }
 
-    LOG_PARAMS(DEBUG_DBG, stdout, "%8d Bytes are written\n", nbytes_write);
+    LOG_PARAMS(DEBUG_DBG, stdout, "%8ld Bytes are written\n", nbytes_write);
 
     return 1;
 }
@@ -111,9 +111,12 @@ int generate_file(FILE *fp, const char *fname, long long int size, gen_option_t 
             bytes_to_write = random_size;
         }
         if (write_data_to_file(fp, data, bytes_to_write)!=1) {
-            nbytes_write += bytes_to_write;
             LOG(DEBUG_ERR, stderr, "Failed to write chunk data to the file!\n");
             return 0;
+        }
+        else {
+            nbytes_write += bytes_to_write;
+            LOG_PARAMS(DEBUG_DBG, stderr, "%12lld bytes are written to the file\n", nbytes_write);
         }
     }
 

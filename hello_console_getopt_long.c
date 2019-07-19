@@ -47,7 +47,7 @@ static void usage(const char *program_name)
     fprintf(stdout, "Note:\n");
     fprintf(stdout, "Each file is generated with many basic units called \"blocks\"\n");
     fprintf(stdout, "And each block could be at different sizes but in\n");
-    fprintf(stdout, "range [%8d,%8d]. By default, all the block size will be %d.\n", DEFAULT_CHUNK_SIZE);
+    fprintf(stdout, "range [%8d,%8d]. By default, all the block size will be %d.\n", MIN_CHUNK_SIZE, MAX_CHUNK_SIZE, DEFAULT_CHUNK_SIZE);
 }
 
 int main(int argc, char **argv)
