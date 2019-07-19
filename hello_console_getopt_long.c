@@ -28,7 +28,7 @@ static long long output_file_size = DEFAULT_OUTPUT_FILE_SIZE;
 char *output_file_name = NULL;
 const char *mode = "wb+";
 
-static void usage(char *program_name)
+static void usage(const char *program_name)
 {
     fprintf(stdout, "\n");
     fprintf(stdout, "Usage: %s -f <filename> [OPTIONS]...\n", program_name);
@@ -110,5 +110,6 @@ int main(int argc, char **argv)
     }
 
 end:
+    fclose(fp);
     return EXIT_SUCCESS;
 }

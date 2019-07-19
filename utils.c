@@ -1,5 +1,6 @@
 #include <time.h>
 #include <stdint.h>
+#include <memory.h>
 #include "utils.h"
 #include "log.h"
 
@@ -26,7 +27,7 @@ static unsigned char *generate_data(size_t size)
     while (num_gen > 0) {
         num_gen--;
         content = rand();
-        memecpy(data, content, sizeof_int);
+        memcpy(data, &content, sizeof_int);
     }
 
     return data;

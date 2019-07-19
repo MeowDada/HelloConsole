@@ -14,6 +14,6 @@ typedef struct gen_option {
 } gen_option_t;
 
 int try_open(FILE **fp, const char *fname, const char *mode);
-int generate_file(FILE *fp, const char *fname, size_t size, gen_option_t option);
+int generate_file(FILE *fp, const char *fname, long long int size, gen_option_t option);
 
 #endif /* UTILS_H */
