@@ -92,12 +92,14 @@ int generate_file(FILE *fp, const char *fname, long long int size, gen_option_t 
 
     unsigned char *data = NULL;
     long long int nbytes_write = (long long int)0;
+    long long int bytes_to_write = DEFAULT_CHUNK_SIZE;
 
     if (!option.random_content && !option.random_block_size)
         data = generate_data(DEFAULT_CHUNK_SIZE);
     else if (!option.random_content && option.random_block_size) {
         size_t random_size = generate_random_data_size();
         data = generate_data(random_size);   
+        bytes_to_write = random_size;
     }
 
     while (!file_is_full(nbytes_write, size)) {
@@ -106,8 +108,10 @@ int generate_file(FILE *fp, const char *fname, long long int size, gen_option_t 
                 free(data);
             size_t random_size = generate_random_data_size();
             data = generate_data(random_size);
+            bytes_to_write = random_size;
         }
-        if (write_data_to_file(fp, data, DEFAULT_CHUNK_SIZE)!=1) {
+        if (write_data_to_file(fp, data, bytes_to_write)!=1) {
+            nbytes_write += bytes_to_write;
             LOG(DEBUG_ERR, stderr, "Failed to write chunk data to the file!\n");
             return 0;
         }
